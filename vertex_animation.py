@@ -42,7 +42,6 @@ def copyMeshData(data, object, newBmesh, scene, context):
     meshData = object_eval.to_mesh()
 
     for vert in meshData.vertices:
-        print(vert.co)
         vert.co = object.matrix_world @ vert.co
     
     newBmesh.from_mesh(meshData)
@@ -171,8 +170,6 @@ def main(context):
     morphData = buildMorphData(data, morphList)
     bakeMorphData(data, exportMesh, scene, morphData)
 
-#add 2019/06/12.
-#再帰処理で指定の値以上で最小の2のべき乗値を求める.
 def pad_to_power_of_two(compValue, powerValue = 1):
     if powerValue >= compValue:
         return powerValue
@@ -203,9 +200,9 @@ class UT_ProcessMeshesOperator(Operator):
         return {'FINISHED'}
 
 #create panel class for UI in object mode tool shelf
-class UT_VertexAnimPanel(Panel):
+class UT_PT_VertexAnimPanel(Panel):
     bl_label = "Vertex Animation"
-    bl_idname = "ut_vertex_anim_panel"
+    bl_idname = "UT_PT_vertex_anim_panel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = "Unreal Tools"
@@ -228,7 +225,7 @@ class UT_VertexAnimPanel(Panel):
 
 
 addon_classes = (
-    UT_VertexAnimPanel,
+    UT_PT_VertexAnimPanel,
     UT_ProcessMeshesOperator
 )
 
